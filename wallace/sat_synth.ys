@@ -1,0 +1,3 @@
+read_verilog -formal ./wallace_adder.v
+prep -top Wallace_adder; flatten
+sat -prove-asserts -show-all -dump_vcd ./wallace_adder.vcd
