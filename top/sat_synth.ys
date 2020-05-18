@@ -1,0 +1,4 @@
+read_verilog -formal ./mult.v
+prep -top Mult; flatten
+show;
+sat -prove-asserts -show-all -dump_vcd ./mult.vcd
