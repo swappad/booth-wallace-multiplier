@@ -20,8 +20,9 @@ module full_adder(
 	assign out_carry = carry_1 | carry_2;
 	assign out = in_carry ^ s_prime;
 
-	`ifdef FORMAL
+/*	`ifdef FORMAL
 		assert property ({1'b0, in_a} + {1'b0, in_b} + {1'b0, in_carry} == {out_carry, out});
 	`endif
+	*/
 
 endmodule
