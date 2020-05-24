@@ -2,7 +2,7 @@
 `include "../full-adder/full-adder.v"
 
 // 18 Input Wallace adder
-module Wallace_adder_18 #(parameter WORDLEN=3) (
+module Wallace_adder_18 #(parameter WORDLEN=4) (
 	input [WORDLEN-1:0] in_1,
 	input [WORDLEN-1:0] in_2,
 	input [WORDLEN-1:0] in_3,
@@ -23,48 +23,48 @@ module Wallace_adder_18 #(parameter WORDLEN=3) (
 	input [WORDLEN-1:0] in_18,
 	output [WORDLEN-1:0] out
 );
-	reg [WORDLEN-1:0] s_row_11;
-	reg [WORDLEN-1:0] s_row_12;
-	reg [WORDLEN-1:0] s_row_13;
-	reg [WORDLEN-1:0] s_row_14;
-	reg [WORDLEN-1:0] s_row_15;
-	reg [WORDLEN-1:0] s_row_16;
+	wire  [WORDLEN-1:0] s_row_11;
+	wire  [WORDLEN-1:0] s_row_12;
+	wire  [WORDLEN-1:0] s_row_13;
+	wire  [WORDLEN-1:0] s_row_14;
+	wire  [WORDLEN-1:0] s_row_15;
+	wire  [WORDLEN-1:0] s_row_16;
 
-	reg [WORDLEN-1:0] s_row_21;
-	reg [WORDLEN-1:0] s_row_22;
-	reg [WORDLEN-1:0] s_row_23;
-	reg [WORDLEN-1:0] s_row_24;
+	wire  [WORDLEN-1:0] s_row_21;
+	wire  [WORDLEN-1:0] s_row_22;
+	wire  [WORDLEN-1:0] s_row_23;
+	wire  [WORDLEN-1:0] s_row_24;
 
-	reg [WORDLEN-1:0] s_row_31;
-	reg [WORDLEN-1:0] s_row_32;
+	wire  [WORDLEN-1:0] s_row_31;
+	wire  [WORDLEN-1:0] s_row_32;
 
-	reg [WORDLEN-1:0] s_row_41;
-	reg [WORDLEN-1:0] s_row_42;
+	wire  [WORDLEN-1:0] s_row_41;
+	wire  [WORDLEN-1:0] s_row_42;
 
-	reg [WORDLEN-1:0] s_row_5;
-	reg [WORDLEN-1:0] s_row_6;
+	wire  [WORDLEN-1:0] s_row_5;
+	wire  [WORDLEN-1:0] s_row_6;
 
 
-	reg [WORDLEN-1:0] c_row_11;
-	reg [WORDLEN-1:0] c_row_12;
-	reg [WORDLEN-1:0] c_row_13;
-	reg [WORDLEN-1:0] c_row_14;
-	reg [WORDLEN-1:0] c_row_15;
-	reg [WORDLEN-1:0] c_row_16;
+	wire  [WORDLEN-1:0] c_row_11;
+	wire  [WORDLEN-1:0] c_row_12;
+	wire  [WORDLEN-1:0] c_row_13;
+	wire  [WORDLEN-1:0] c_row_14;
+	wire  [WORDLEN-1:0] c_row_15;
+	wire  [WORDLEN-1:0] c_row_16;
 
-	reg [WORDLEN-1:0] c_row_21;
-	reg [WORDLEN-1:0] c_row_22;
-	reg [WORDLEN-1:0] c_row_23;
-	reg [WORDLEN-1:0] c_row_24;
+	wire  [WORDLEN-1:0] c_row_21;
+	wire  [WORDLEN-1:0] c_row_22;
+	wire  [WORDLEN-1:0] c_row_23;
+	wire  [WORDLEN-1:0] c_row_24;
 
-	reg [WORDLEN-1:0] c_row_31;
-	reg [WORDLEN-1:0] c_row_32;
+	wire  [WORDLEN-1:0] c_row_31;
+	wire  [WORDLEN-1:0] c_row_32;
 
-	reg [WORDLEN-1:0] c_row_41;
-	reg [WORDLEN-1:0] c_row_42;
+	wire  [WORDLEN-1:0] c_row_41;
+	wire  [WORDLEN-1:0] c_row_42;
 
-	reg [WORDLEN-1:0] c_row_5;
-	reg [WORDLEN-1:0] c_row_6;
+	wire  [WORDLEN-1:0] c_row_5;
+	wire  [WORDLEN-1:0] c_row_6;
 
 	full_adder FA_Row_11 [WORDLEN-1:0] (in_1, in_2, in_3, s_row_11, c_row_11);
 	full_adder FA_Row_12 [WORDLEN-1:0] (in_4, in_5, in_6, s_row_12, c_row_12);
@@ -90,10 +90,12 @@ module Wallace_adder_18 #(parameter WORDLEN=3) (
 	full_adder FA_Row_6 [WORDLEN-1:0] (s_row_5, {c_row_5[WORDLEN-2:0], 1'b0}, {c_row_42[WORDLEN-2:0], 1'b0}, s_row_6, c_row_6);
 
 	// CPA
-	reg [WORDLEN-1:0] cpa_carry;
+	wire [WORDLEN-1:0] cpa_carry;
 	full_adder CPA [WORDLEN-1:0] (s_row_6, {c_row_6[WORDLEN-2:0], 1'b0}, {cpa_carry[WORDLEN-2:0], 1'b0}, out, cpa_carry);
 
 	`ifdef FORMAL 
 		assert property((in_1 + in_2 + in_3 + in_4 + in_5 + in_6 + in_7 + in_8 + in_9 + in_10 + in_11 + in_12 + in_13 + in_14 + in_15 + in_16 + in_17 + in_18) == out);
 	`endif
+
+
 endmodule
