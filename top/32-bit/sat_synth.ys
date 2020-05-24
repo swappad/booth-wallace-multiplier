@@ -1,0 +1,3 @@
+read_verilog -formal ./mult_32.v
+prep -top Mult_32; flatten; opt;
+sat -prove-asserts -show-all  #-dump_vcd mult.vcd 

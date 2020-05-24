@@ -1,0 +1,4 @@
+read_verilog -formal ./mult_32.v
+prep -top Mult
+flatten; opt;
+write_smt2 -wires mult_32.smt2
