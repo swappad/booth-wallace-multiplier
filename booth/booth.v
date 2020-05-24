@@ -1,8 +1,8 @@
-module Booth(
+module Booth #(parameter WORDLEN=32) (
 	/* from LSB to MSB */
 	input [2:0] S,
-	input [7:0] A,
-	output wire [8:0] Result,
+	input [WORDLEN-1:0] A,
+	output wire [WORDLEN:0] Result,
 	output wire Sign
 );
 
@@ -10,7 +10,7 @@ module Booth(
 	reg valency_1;
 
 	assign Sign = S[2];
-	assign Result = ({9{S[2]}} ^ (valency_2 ? {A, 1'b0} : (valency_1 ? {1'b0, A} : {9'b0})));
+	assign Result = ({(WORDLEN+1){S[2]}} ^ (valency_2 ? {A, 1'b0} : (valency_1 ? {1'b0, A} : {9'b0})));
 
 	always@(S, A) begin
 		valency_1 = S[0] ^ S[1];
